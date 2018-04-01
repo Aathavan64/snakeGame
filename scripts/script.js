@@ -28,7 +28,7 @@ let drawBorder = () => {
 }
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-//scoreboard 
+//point tally
 let drawScore = () => {
     ctx.font = "40px Courier"
     ctx.fillStyle = "White";
@@ -37,7 +37,7 @@ let drawScore = () => {
     ctx.fillText("Score:" + score,blockSize, blockSize);
 };
 
-//gameover
+//gameover prompt
 let gameOver = () => {
     clearInterval(intervalId);
     ctx.font = "60px Courier";
@@ -71,7 +71,7 @@ Block.prototype.drawSquare = function (color) {
     ctx.fillRect(x, y, blockSize, blockSize);
 };
 
-//circle 
+//circle for apple constructor 
 Block.prototype.drawCircle = function (color) {
     let centerX = this.col * blockSize + blockSize / 2;
     let centerY = this.row * blockSize + blockSize / 2;
@@ -79,7 +79,7 @@ Block.prototype.drawCircle = function (color) {
     circle(centerX, centerY, blockSize / 2, true); 
 };
 
-//check if two blocks are in the same place
+//collision checker
 Block.prototype.equal = function (otherBlock) {
     return this.col === otherBlock.col && this.row === otherBlock.row;
 };
@@ -107,7 +107,7 @@ Snake.prototype.draw = function () {
 //create random colors for snake segments 
 
 
-//create new had and add at current locaiton 
+//c
 Snake.prototype.move = function () {
     let head = this.segments [0];
     let newHead;
@@ -139,7 +139,7 @@ Snake.prototype.move = function () {
     }
 };
 
-//check if snakes new head had collidd with wall or itself
+//snake wall and self collision
 Snake.prototype.checkCollision = function (head) {
     let leftCollision = (head.col === 0);
     let topCollision = (head.row === 9);
@@ -159,7 +159,7 @@ Snake.prototype.checkCollision = function (head) {
     return wallCollision || selfCollision; 
 };
 
-//set the snakes next direction based on the keyboard
+//set the snakes direction
 Snake.prototype.setDirection = function (newDirection) {
     if (this.direction === "up" && newDirection === "down") {
         return;
@@ -174,31 +174,24 @@ Snake.prototype.setDirection = function (newDirection) {
     this.nextDirection = newDirection;
 };
 
-//The Apple constructior
 
 let Apple = function () {
     this.position = new Block (10, 10);
 };
 
-
-// Draw a circle at apple locaiton 
-
 Apple.prototype.draw = function () {
     this.position.drawCircle("LimeGreen");
 };
 
-//move the apple to a new random location 
 Apple.prototype.move = function () {
     let randomCol = Math.floor(Math.random() * (widthInBlocks - 2)) + 1;
     let randomRow = Math.floor(Math.random() * (heightInBlocks - 2)) +1;
     this.position = new Block(randomCol, randomRow);
 };
 
-//Create Snake and apple objects
 let snake = new Snake();
 let apple = new Apple();
 
-//pass an animation funciton to set interval
 let intervalId = setInterval (function (){
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     drawScore();
@@ -208,15 +201,12 @@ let intervalId = setInterval (function (){
     drawBorder();
 }, 100);
 
-//convert keystrokes into directions
 let directions = {
     37: "left",
     38: "up",
     39: "right",
     40: "down"
 };
-
-//the keydown handelr for handling direciton ke presses
 
 $("body").keydown(function (event) {
     let newDirection = directions[event.keyCode];
