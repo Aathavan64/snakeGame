@@ -1,0 +1,9 @@
+body {
+  background-image: url("../images/snakeBackground.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex; }
+
+canvas {
+  margin: auto;
+  align-self: flex-end; }
